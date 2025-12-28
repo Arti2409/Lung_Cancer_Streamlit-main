@@ -387,46 +387,43 @@ if (selection == 'Lung Cancer Prediction'):
     
 
     
-        
-   
-
 if (selection == 'CNN Based disease Prediction'):
-  @st.cache_resource
-  def loading_model():
-    ...
+    @st.cache_resource
+    def loading_model():
+        fp = "models/keras_model.h5"
+        # Use custom_object_scope to handle DepthwiseConv2D compatibility
+        with tf.keras.utils.custom_object_scope({'DepthwiseConv2D': tf.keras.layers.DepthwiseConv2D}):
+            model_loader = load_model(fp, compile=False)
+        return model_loader
+    try:
+        cnn = loading_model()
+    st.write("""
+    # Lung Cancer Detection using CNN and CT-Scan Images
+    """)
+    except Exception as e:
+    st.error(f"Error loading model: {str(e)}")
+    st.info("Please ensure you have TensorFlow 2.13.0 or higher installed.")
+    st.stop() 
+
+temp = st.file_uploader("Upload CT-Scan Image",type=['png','jpeg','jpg'])
+if temp is not None:
+    file_details = {"FileName":temp.name,"FileType":temp.type,"FileSize":temp.size}
+    st.write(file_details)
+#temp = temp.decode()
+
+buffer = temp
+temp_file = NamedTemporaryFile(delete=False)
+if buffer:
+    temp_file.write(buffer.getvalue())
+    st.write(image.load_img(temp_file.name))
 
 
-  def loading_model():
-    fp = "models/keras_model.h5"
-    model_loader = load_model(fp)
-    return model_loader
-
-  cnn = loading_model()
-  st.write("""
-  # Lung Cancer Detection using CNN and CT-Scan Images
-  """)
-
-
-
-  temp = st.file_uploader("Upload CT-Scan Image",type=['png','jpeg','jpg'])
-  if temp is not None:
-      file_details = {"FileName":temp.name,"FileType":temp.type,"FileSize":temp.size}
-      st.write(file_details)
-  #temp = temp.decode()
-
-  buffer = temp
-  temp_file = NamedTemporaryFile(delete=False)
-  if buffer:
-      temp_file.write(buffer.getvalue())
-      st.write(image.load_img(temp_file.name))
-
-
-  if buffer is None:
+if buffer is None:
     st.text("Oops! that doesn't look like an image. Try again.")
 
-  else:
+else:
 
-  
+
 
     ved_img = image.load_img(temp_file.name, target_size=(224, 224))
 
@@ -440,13 +437,13 @@ if (selection == 'CNN Based disease Prediction'):
     print(hardik_preds[0])
 
     if hardik_preds[0][0]>= 0.5:
-      out = ('I am {:.2%} percent confirmed that this is a Normal Case'.format(hardik_preds[0][0]))
-      st.balloons()
-      st.success(out)
+        out = ('I am {:.2%} percent confirmed that this is a Normal Case'.format(hardik_preds[0][0]))
+        st.balloons()
+        st.success(out)
     
     else: 
-      out = ('I am {:.2%} percent confirmed that this is a Lung Cancer Case'.format(1-hardik_preds[0][0]))
-      st.error(out)
+        out = ('I am {:.2%} percent confirmed that this is a Lung Cancer Case'.format(1-hardik_preds[0][0]))
+        st.error(out)
 
     
     
