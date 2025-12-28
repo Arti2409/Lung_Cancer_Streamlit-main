@@ -392,8 +392,10 @@ if (selection == 'Lung Cancer Prediction'):
    
 
 if (selection == 'CNN Based disease Prediction'):
-  st.set_option('deprecation.showfileUploaderEncoding', False)
-  @st.cache(allow_output_mutation=True)
+  @st.cache_resource
+  def loading_model():
+    ...
+
 
   def loading_model():
     fp = "models/keras_model.h5"
