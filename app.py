@@ -39,17 +39,43 @@ with st.sidebar:
     st.session_state.selection = selection
 
 # Main content area
-# Add persistent mobile navigation in main area
 st.markdown("### 🏥 Lung Cancer Detection System")
 
-# Mobile-friendly persistent navigation
-mobile_selection = st.selectbox(
-    "Navigation (Mobile-Friendly)",
-    ['Introduction', 'About the Dataset', 'Lung Cancer Prediction', 'CNN Based disease Prediction'],
-    index=['Introduction', 'About the Dataset', 'Lung Cancer Prediction', 'CNN Based disease Prediction'].index(selection),
-    key='mobile_nav',
-    help="Use this dropdown to navigate on mobile devices"
-)
+# CSS to hide mobile navigation on desktop
+st.markdown("""
+    <style>
+    /* Hide mobile navigation on desktop (screens wider than 768px) */
+    @media (min-width: 769px) {
+        [data-testid="stSelectbox"]:has(label:contains("Mobile Navigation")) {
+            display: none !important;
+        }
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# Mobile-only navigation container
+mobile_nav_container = st.container()
+with mobile_nav_container:
+    st.markdown("""
+        <style>
+        @media (min-width: 769px) {
+            .mobile-nav-container {
+                display: none !important;
+            }
+        }
+        </style>
+        <div class="mobile-nav-container">
+    """, unsafe_allow_html=True)
+    
+    mobile_selection = st.selectbox(
+        "📱 Select a page:",
+        ['Introduction', 'About the Dataset', 'Lung Cancer Prediction', 'CNN Based disease Prediction'],
+        index=['Introduction', 'About the Dataset', 'Lung Cancer Prediction', 'CNN Based disease Prediction'].index(selection),
+        key='mobile_nav',
+        help="Mobile navigation"
+    )
+    
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # Update selection if mobile navigation is used
 if mobile_selection != selection:
@@ -60,7 +86,7 @@ st.markdown("---")
 
 # Alternative: Visible navigation info in sidebar
 st.sidebar.markdown("---")
-st.sidebar.info("Use this menu to navigate between sections")
+st.sidebar.info("👈 Use this menu to navigate between sections")
     
 
 #Introduction page
