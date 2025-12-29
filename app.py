@@ -11,24 +11,14 @@ from tempfile import NamedTemporaryFile
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
 from streamlit_option_menu import option_menu
-st.set_page_config(
-    page_title='Lung Cancer Detection',
-    initial_sidebar_state='expanded',
-    layout='wide'
-)
+st.set_page_config(page_title='Lung Cancer Detection')
 import joblib
 
 #Loading models
 cancer_model = joblib.load("models/final_model.sav")
 
 
-# Mobile navigation helper
-if 'selection' not in st.session_state:
-    st.session_state.selection = 'Introduction'
-
 with st.sidebar:
-    st.markdown("### Navigation Menu")
-    st.info("Use the menu below to navigate")
     selection = option_menu('Lung Cancer Detection System',
     ['Introduction',
     'About the Dataset',
