@@ -11,14 +11,24 @@ from tempfile import NamedTemporaryFile
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
 from streamlit_option_menu import option_menu
-st.set_page_config(page_title='Lung Cancer Detection')
+st.set_page_config(
+    page_title='Lung Cancer Detection',
+    initial_sidebar_state='expanded',
+    layout='wide'
+)
 import joblib
 
 #Loading models
 cancer_model = joblib.load("models/final_model.sav")
 
 
+# Mobile navigation helper
+if 'selection' not in st.session_state:
+    st.session_state.selection = 'Introduction'
+
 with st.sidebar:
+    st.markdown("### 📱 Navigation Menu")
+    st.info("👈 Use the menu below to navigate")
     selection = option_menu('Lung Cancer Detection System',
     ['Introduction',
     'About the Dataset',
@@ -26,6 +36,24 @@ with st.sidebar:
     'CNN Based disease Prediction'],
     icons = ['activity','heart','person', 'heart'],
     default_index = 0)
+    st.session_state.selection = selection
+
+# Main content area
+st.markdown("""
+    <style>
+    @media (max-width: 768px) {
+        .sidebar-note {
+            display: block !important;
+        }
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# Mobile-friendly navigation hint
+col1, col2 = st.columns([3, 1])
+with col2:
+    if st.button("☰ Menu", help="Toggle sidebar to navigate"):
+        st.info("Click the arrow (>) in the top-left corner to open the navigation menu")
     
 
 #Introduction page
