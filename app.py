@@ -5,8 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from PIL import Image 
-import tensorflow
+from PIL import Image
 from tensorflow.keras.models import load_model
 import tensorflow as tf
 from tempfile import NamedTemporaryFile
