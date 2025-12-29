@@ -3,15 +3,10 @@ seaborn==0.12.2
 rich==14.2.0
 scikit-learn
 joblib
-numpy
 pandas
 tensorflow-cpu
-opencv-python-headless
-streamlit
 numpy
-pandas
 tensorflow-cpu==2.15.0
-Pillow
 streamlit
 numpy==1.26.4
 pandas
