@@ -9,7 +9,6 @@ import seaborn as sns
 from PIL import Image 
 import tensorflow
 from tensorflow.keras.models import load_model
-import tensorflow as tf
 from tempfile import NamedTemporaryFile
 from tensorflow.keras.preprocessing import image 
 from streamlit_option_menu import option_menu
