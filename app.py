@@ -404,7 +404,7 @@ if (selection == 'Lung Cancer Prediction'):
 
         @st.cache_resource
         def load_cnn():
-            return load_model("cnn_model/cnn_model.h5")
+            return load_model("cnn model/lungcancer_model_cnn.h5")
 
         cnn_model = load_cnn()
         st.success("✅ CNN model loaded")
