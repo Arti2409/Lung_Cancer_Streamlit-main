@@ -10,14 +10,11 @@ import tensorflow as tf
 from tempfile import NamedTemporaryFile
 from tensorflow.keras.preprocessing import image 
 from streamlit_option_menu import option_menu
-import pyparsing
 st.set_page_config(page_title='Lung Cancer Detection')
 import joblib
 
-model = joblib.load("models/final_model.sav")
-
 #Loading models
-cancer_model = pickle.load(open('models/final_model.sav', 'rb'))
+cancer_model = joblib.load("models/final_model.sav")
 
 
 with st.sidebar:
