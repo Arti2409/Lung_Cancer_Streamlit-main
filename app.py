@@ -11,7 +11,6 @@ from tempfile import NamedTemporaryFile
 from tensorflow.keras.preprocessing import image 
 from streamlit_option_menu import option_menu
 import pyparsing
-
 st.set_page_config(page_title='Lung Cancer Detection')
 import joblib
 
@@ -428,7 +427,7 @@ if (selection == 'Lung Cancer Prediction'):
     temp = st.file_uploader("Upload CT-Scan Image",type=['png','jpeg','jpg'])
     if temp is not None:
         file_details = {"FileName":temp.name,"FileType":temp.type,"FileSize":temp.size}
-    st.write(file_details)
+        st.write(file_details)
   #temp = temp.decode()
 
     buffer = temp
@@ -437,38 +436,30 @@ if (selection == 'Lung Cancer Prediction'):
         temp_file.write(buffer.getvalue())
         st.write(image.load_img(temp_file.name))
 
+        ved_img = image.load_img(temp_file.name, target_size=(224, 224))
 
-        if buffer is None:
-            st.text("Oops! that doesn't look like an image. Try again.")
+        # Preprocessing the image
+        pp_ved_img = image.img_to_array(ved_img)
+        pp_ved_img = pp_ved_img/255
+        pp_ved_img = np.expand_dims(pp_ved_img, axis=0)
 
-        else:
+        #predict
+        hardik_preds= cnn.predict(pp_ved_img)
+        print(hardik_preds[0])
 
-  
+        if hardik_preds[0][0]>= 0.5:
+            out = ('I am {:.2%} percent confirmed that this is a Normal Case'.format(hardik_preds[0][0]))
+            st.balloons()
+            st.success(out)
+        
+        else: 
+            out = ('I am {:.2%} percent confirmed that this is a Lung Cancer Case'.format(1-hardik_preds[0][0]))
+            st.error(out)
 
-            ved_img = image.load_img(temp_file.name, target_size=(224, 224))
-
-    # Preprocessing the image
-    pp_ved_img = image.img_to_array(ved_img)
-    pp_ved_img = pp_ved_img/255
-    pp_ved_img = np.expand_dims(pp_ved_img, axis=0)
-
-    #predict
-    hardik_preds= cnn.predict(pp_ved_img)
-    print(hardik_preds[0])
-
-    if hardik_preds[0][0]>= 0.5:
-      out = ('I am {:.2%} percent confirmed that this is a Normal Case'.format(hardik_preds[0][0]))
-      st.balloons()
-      st.success(out)
-    
-    else: 
-      out = ('I am {:.2%} percent confirmed that this is a Lung Cancer Case'.format(1-hardik_preds[0][0]))
-      st.error(out)
-
-    
-    
-    image = Image.open(temp)
-    st.image(image,use_column_width=True)
+        
+        
+        image = Image.open(temp)
+        st.image(image,use_column_width=True)
             
               
 
