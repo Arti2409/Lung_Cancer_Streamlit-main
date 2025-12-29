@@ -39,21 +39,37 @@ with st.sidebar:
     st.session_state.selection = selection
 
 # Main content area
+# Mobile-friendly navigation alert
 st.markdown("""
     <style>
-    @media (max-width: 768px) {
-        .sidebar-note {
-            display: block !important;
+    .mobile-nav-alert {
+        background-color: #ff4b4b;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 16px;
+        margin-bottom: 20px;
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+    @media (min-width: 769px) {
+        .mobile-nav-alert {
+            display: none;
         }
     }
     </style>
+    <div class="mobile-nav-alert">
+        👆 <strong>MOBILE USERS:</strong> Click the arrow (>) in the top-left corner to open the menu!
+    </div>
 """, unsafe_allow_html=True)
 
-# Mobile-friendly navigation hint
-col1, col2 = st.columns([3, 1])
-with col2:
-    if st.button("☰ Menu", help="Toggle sidebar to navigate"):
-        st.info("Click the arrow (>) in the top-left corner to open the navigation menu")
+# Alternative: Visible navigation dropdown for mobile
+st.sidebar.markdown("---")
+st.sidebar.info("👈 Use this menu to navigate between sections")
     
 
 #Introduction page
