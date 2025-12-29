@@ -1,8 +1,12 @@
-
 {
-  "name": "Python 3.9 Codespace",
-  "image": "mcr.microsoft.com/devcontainers/python:3.9",
-  "postCreateCommand": "pip install --upgrade pip ipykernel notebook",
+  "name": "Python 3.10 Streamlit",
+  "image": "mcr.microsoft.com/devcontainers/python:3.10",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.10"
+    }
+  },
+  "postCreateCommand": "python -m venv .venv && . .venv/bin/activate && pip install --upgrade pip && pip install ipykernel notebook",
   "customizations": {
     "vscode": {
       "extensions": [
