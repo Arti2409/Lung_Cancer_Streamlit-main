@@ -385,44 +385,27 @@ if (selection == 'Lung Cancer Prediction'):
     expander = st.expander("Here are some more random values from Test Set")
     
     expander.write(concate_data.head(5))
+    
+
+    
         
-    
-    if (selection == 'CNN Based disease Prediction'):
-    
-        st.header("🧠 CNN-Based Image Prediction")
+   
 
-    uploaded_file = st.file_uploader(
-        "Upload Lung X-ray / CT Scan",
-        type=["jpg", "jpeg", "png"]
-    )
+if (selection == 'CNN Based disease Prediction'):
+  st.set_option('deprecation.showfileUploaderEncoding', False)
+  @st.cache(allow_output_mutation=True)
 
-    cnn_model = None
+  def loading_model():
+    fp = "models/keras_model.h5"
+    model_loader = load_model(fp)
+    return model_loader
 
-    try:
-        import tensorflow as tf
-        from tensorflow.keras.models import load_model
+  cnn = loading_model()
+  st.write("""
+  # Lung Cancer Detection using CNN and CT-Scan Images
+  """)
 
-        @st.cache_resource
-        def load_cnn():
-            return load_model("cnn model/lungcancer_model_cnn.h5")
 
-        cnn_model = load_cnn()
-        st.success("✅ CNN model loaded")
-
-    except Exception as e:
-        st.warning("⚠️ CNN is not available in this environment")
-        st.info("This will work after deployment on Streamlit Cloud.")
-        st.caption(f"Details: {e}")
-
-    if uploaded_file is not None and cnn_model is not None:
-        from PIL import Image
-        import numpy as np
-
-        image = Image.open(uploaded_file).convert("RGB")
-        st.image(image, caption="Uploaded Image", use_container_width=True)
-
-        st.info("🧪 Processing image...")
-        st.success("🟢 Prediction completed (demo output)")
 
     temp = st.file_uploader("Upload CT-Scan Image",type=['png','jpeg','jpg'])
     if temp is not None:
@@ -436,7 +419,15 @@ if (selection == 'Lung Cancer Prediction'):
         temp_file.write(buffer.getvalue())
         st.write(image.load_img(temp_file.name))
 
-        ved_img = image.load_img(temp_file.name, target_size=(224, 224))
+
+  if buffer is None:
+    st.text("Oops! that doesn't look like an image. Try again.")
+
+  else:
+
+  
+
+    ved_img = image.load_img(temp_file.name, target_size=(224, 224))
 
         # Preprocessing the image
         pp_ved_img = image.img_to_array(ved_img)
