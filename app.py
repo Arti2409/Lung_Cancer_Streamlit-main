@@ -8,7 +8,8 @@ import seaborn as sns
 from PIL import Image
 import tensorflow as tf
 from tempfile import NamedTemporaryFile
-from tensorflow.keras.preprocessing import image 
+from tensorflow.keras.preprocessing import image
+from tensorflow.keras.models import load_model
 from streamlit_option_menu import option_menu
 st.set_page_config(page_title='Lung Cancer Detection')
 import joblib
