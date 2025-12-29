@@ -19,13 +19,21 @@ cancer_model = joblib.load("models/final_model.sav")
 
 
 with st.sidebar:
-    selection = option_menu('Lung Cancer Detection System',
+    selected = option_menu('Lung Cancer Detection System',
     ['Introduction',
     'About the Dataset',
     'Lung Cancer Prediction',
     'CNN Based disease Prediction'],
     icons = ['activity','heart','person', 'heart'],
     default_index = 0)
+
+# Store selection in session state for persistence
+if 'selection' not in st.session_state:
+    st.session_state.selection = selected
+else:
+    st.session_state.selection = selected
+
+selection = st.session_state.selection
     
 
 #Introduction page
