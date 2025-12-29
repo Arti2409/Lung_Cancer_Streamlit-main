@@ -27,8 +27,8 @@ if 'selection' not in st.session_state:
     st.session_state.selection = 'Introduction'
 
 with st.sidebar:
-    st.markdown("### 📱 Navigation Menu")
-    st.info("👈 Use the menu below to navigate")
+    st.markdown("### Navigation Menu")
+    st.info("Use the menu below to navigate")
     selection = option_menu('Lung Cancer Detection System',
     ['Introduction',
     'About the Dataset',
