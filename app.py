@@ -11,7 +11,10 @@ from tempfile import NamedTemporaryFile
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
 from streamlit_option_menu import option_menu
-st.set_page_config(page_title='Lung Cancer Detection')
+st.set_page_config(
+    page_title='Lung Cancer Detection',
+    initial_sidebar_state='expanded'
+)
 import joblib
 
 #Loading models
