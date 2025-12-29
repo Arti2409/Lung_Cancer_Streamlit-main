@@ -397,10 +397,6 @@ if (selection == 'Lung Cancer Prediction'):
 if (selection == 'CNN Based disease Prediction'):
   @st.cache_resource
   def loading_model():
-    ...
-
-
-  def loading_model():
     fp = "models/keras_model.h5"
     model_loader = load_model(fp)
     return model_loader

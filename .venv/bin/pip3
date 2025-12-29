@@ -1,4 +1,4 @@
-#!/Volumes/Projects/Lung_Cancer_Streamlit-main/.venv/bin/python3
+#!/workspaces/Lung_Cancer_Streamlit-main/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
